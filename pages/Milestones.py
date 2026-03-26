@@ -1,11 +1,8 @@
 import streamlit as st
-import pandas as pd
+from utils.load_data import load_milestones
 
-st.title("🎯 Milestones")
+st.title("Milestones")
 
-project = st.session_state.get("project")
-
-df = pd.read_excel("data/milestones.xlsx")
-df = df[df["ProjectID"] == project]
+df = load_milestones()
 
 st.dataframe(df)
