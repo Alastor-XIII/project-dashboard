@@ -3,9 +3,13 @@ import plotly.express as px
 import datetime
 from utils.load_data import load_activities
 
-project = st.session_state.get("project")
+if "project" not in st.session_state:
+    st.warning("Please select project from Home")
+    st.stop()
 
-st.title(f"📅 Timeline - {project}")
+project = st.session_state["project"]
+
+st.title(f"Timeline - {project}")
 
 df = load_activities()
 df = df[df["Project"] == project]
