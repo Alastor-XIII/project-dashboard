@@ -1,13 +1,10 @@
 import streamlit as st
+from utils.load_data import load_projects
 
-st.set_page_config(page_title="Project Dashboard", layout="wide")
+projects = load_projects()
 
-pg = st.navigation([
-    st.Page("pages/Projects_Overview.py", title="Projects Overview"),
-    st.Page("pages/Project_Dashboard.py", title="Project Dashboard"),
-    st.Page("pages/Timeline.py", title="Timeline"),
-    st.Page("pages/Milestones.py", title="Milestones"),
-    st.Page("pages/Resources.py", title="Resources"),
-])
+project_list = projects["Project"].unique()
 
-pg.run()
+selected_project = st.sidebar.selectbox("Select Project", project_list)
+
+st.session_state["project"] = selected_project
