@@ -1,7 +1,7 @@
 import streamlit as st
 from utils.load_data import load_milestones
 
-st.title("Milestones")
+st.title("Project Milestones")
 
 df = load_milestones()
 
