@@ -1,8 +1,7 @@
 import streamlit as st
-import pandas as pd
 
-st.title("👷 Resources")
+if "project" not in st.session_state:
+    st.warning("Please select project from Projects Overview")
+    st.stop()
 
-df = pd.read_excel("data/resources.xlsx")
-
-st.dataframe(df)
+project = st.session_state["project"]
