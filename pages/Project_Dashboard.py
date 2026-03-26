@@ -1,15 +1,23 @@
 import streamlit as st
-import pandas as pd
+from utils.load_data import load_projects, load_activities
 
 st.title("📊 Project Dashboard")
 
-project = st.session_state.get("project")
+projects = load_projects()
+activities = load_activities()
 
-df = pd.read_excel("data/activities.xlsx")
-df = df[df["ProjectID"] == project]
+project_list = projects["Project"].unique()
+selected_project = st.selectbox("Select Project", project_list)
 
-progress = df["Progress"].mean()
+proj_data = projects[projects["Project"] == selected_project]
+act_data = activities[activities["Project"] == selected_project]
 
-st.metric("Overall Progress", f"{progress:.1f}%")
-st.metric("Total Activities", len(df))
-st.metric("Completed Tasks", len(df[df["Progress"]==100]))
+st.subheader("Project Info")
+st.dataframe(proj_data)
+
+st.subheader("Activities")
+st.dataframe(act_data)
+
+progress = act_data["Progress"].mean()
+st.progress(int(progress))
+st.write(f"Overall Progress: {progress:.2f}%")
