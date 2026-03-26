@@ -1,11 +1,11 @@
 import streamlit as st
 from utils.load_data import load_resources
 
-st.title("👷 Resources")
+project = st.session_state.get("project")
+
+st.title(f"👷 Resources - {project}")
 
 df = load_resources()
-
-project = st.selectbox("Select Project", df["Project"].unique())
 df = df[df["Project"] == project]
 
 st.dataframe(df, use_container_width=True)
