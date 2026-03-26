@@ -4,14 +4,15 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 
-def load_projects():
-    return pd.read_excel(DATA_DIR / "projects.xlsx")
-
-def load_activities():
-    return pd.read_excel(DATA_DIR / "activities.xlsx")
-
 def load_milestones():
-    return pd.read_excel(DATA_DIR / "milestones.xlsx")
+    file = DATA_DIR / "milestones.xlsx"
 
-def load_resources():
-    return pd.read_excel(DATA_DIR / "resources.xlsx")
+    if file.exists():
+        return pd.read_excel(file)
+    else:
+        return pd.DataFrame({
+            "ProjectID": ["P001"],
+            "Milestone": ["Sample Milestone"],
+            "Date": ["2026-01-01"],
+            "Responsible": ["Manager"]
+        })
