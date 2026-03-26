@@ -1,23 +1,21 @@
 import streamlit as st
-from utils.load_data import load_projects, load_activities
+from utils.load_data import load_activities
 
-st.title("📊 Project Dashboard")
+project = st.session_state.get("project")
 
-projects = load_projects()
-activities = load_activities()
+st.title(f"📊 Project Dashboard - {project}")
 
-project_list = projects["Project"].unique()
-selected_project = st.selectbox("Select Project", project_list)
+df = load_activities()
+df = df[df["Project"] == project]
 
-proj_data = projects[projects["Project"] == selected_project]
-act_data = activities[activities["Project"] == selected_project]
+progress = df["Progress"].mean()
+total_tasks = len(df)
+delay_tasks = len(df[df["Status"] == "Delay"])
 
-st.subheader("Project Info")
-st.dataframe(proj_data)
+col1, col2, col3 = st.columns(3)
 
-st.subheader("Activities")
-st.dataframe(act_data)
+col1.metric("Progress", f"{progress:.1f}%")
+col2.metric("Total Tasks", total_tasks)
+col3.metric("Delayed Tasks", delay_tasks)
 
-progress = act_data["Progress"].mean()
-st.progress(int(progress))
-st.write(f"Overall Progress: {progress:.2f}%")
+st.dataframe(df, use_container_width=True)
