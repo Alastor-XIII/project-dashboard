@@ -1,12 +1,13 @@
 import streamlit as st
 import plotly.express as px
+import datetime
 from utils.load_data import load_activities
 
-st.title("📅 Project Timeline")
+project = st.session_state.get("project")
+
+st.title(f"📅 Timeline - {project}")
 
 df = load_activities()
-
-project = st.selectbox("Select Project", df["Project"].unique())
 df = df[df["Project"] == project]
 
 fig = px.timeline(
@@ -18,5 +19,8 @@ fig = px.timeline(
 )
 
 fig.update_yaxes(autorange="reversed")
+
+today = datetime.date.today()
+fig.add_vline(x=today, line_dash="dash", line_color="red")
 
 st.plotly_chart(fig, use_container_width=True)
