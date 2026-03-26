@@ -1,6 +1,5 @@
 import streamlit as st
 
-st.set_page_config(page_title="Project Dashboard", layout="wide")
+st.set_page_config(layout="wide")
 
-st.title("🏗️ Project Portfolio Dashboard")
-st.write("Select page from sidebar")
+st.switch_page("pages/1_Projects_Overview.py")
