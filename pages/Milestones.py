@@ -1,7 +1,8 @@
 import streamlit as st
+from utils.load_data import load_milestones
 
-if "project" not in st.session_state:
-    st.warning("Please select project first")
-    st.stop()
+st.title("Milestones")
 
-project = st.session_state["project"]
+df = load_milestones()
+
+st.dataframe(df)
