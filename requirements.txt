@@ -1,6 +1,4 @@
-Home.py
-requirements.txt
-data/
-pages/
-utils/
+streamlit
+pandas
+plotly
 openpyxl
