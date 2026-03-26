@@ -1,5 +1,8 @@
 import streamlit as st
-from utils.load_data import load_projects
+
+if "project" not in st.session_state:
+    st.warning("Please select project from Home")
+    st.stop()
 
 st.title("📁 Projects Overview")
 
